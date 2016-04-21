@@ -60,7 +60,7 @@ class FixClientService(service.Service):
         if os.path.isdir(self.config['statsdir']):
             self.stats_dir = self.config['statsdir']
         else:
-            raise Exception("Error: statsdir not found: '%s'" % self.config['statsdir'])
+            raise Exception("Error: statsdir not found: '{0!s}'".format(self.config['statsdir']))
 
         # stats counters
         self.stats = OrderedDict({
@@ -91,7 +91,7 @@ class FixClientService(service.Service):
         self.ttl_histogram = HdrHistogram(1, 10000000, 3)
         self.msglag_histogram = HdrHistogram(1, 10000000, 3)
 
-        namespace = "stats_%s_%s_depth_%s" % (platform.node(),
+        namespace = "stats_{0!s}_{1!s}_depth_{2!s}".format(platform.node(),
                                         self.SenderCompID,
                                         self.config['market_depth'])
         filename = os.path.join(self.stats_dir,
@@ -126,7 +126,7 @@ class FixClientService(service.Service):
         latency['latency_min'] = ih.get_min_value()
         latency['latency_mean'] = ih.get_mean_value()
         for x in [99.90, 99.00]:
-            latency['latency_%.2f' % x] = ih.get_value_at_percentile(x)
+            latency['latency_{0:.2f}'.format(x)] = ih.get_value_at_percentile(x)
 
         # copy and reset ttl histogram
         th = copy.copy(self.ttl_histogram)
@@ -136,7 +136,7 @@ class FixClientService(service.Service):
         ttl['ttl_min'] = th.get_min_value()
         ttl['ttl_mean'] = th.get_mean_value()
         for x in [99.90, 99.00]:
-            ttl['ttl_%.2f' % x] = th.get_value_at_percentile(x)
+            ttl['ttl_{0:.2f}'.format(x)] = th.get_value_at_percentile(x)
 
         # copy and reset ttl histogram
         #ml = copy.copy(self.msglag_histogram)
@@ -209,7 +209,7 @@ class FixClientService(service.Service):
                        created_at=msg.created_at, recieved_at=msg.recieved_at,
                        delta=delta)
 
-        method = getattr(self, "handle_%s" % msg_type, None)
+        method = getattr(self, "handle_{0!s}".format(msg_type), None)
 
         #try:
         if method is not None:

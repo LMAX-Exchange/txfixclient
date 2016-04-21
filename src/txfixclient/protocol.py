@@ -78,8 +78,7 @@ class FixTagReceiver(Protocol, _PauseableMixin):
 
     def tagLengthExceeded(self, msg):
         raise Exception(
-            'MAX_TAG_LENGTH %s exceeded: %s' %
-            (self.MAX_TAG_LENGTH, msg)
+            'MAX_TAG_LENGTH {0!s} exceeded: {1!s}'.format(self.MAX_TAG_LENGTH, msg)
         )
 
 
@@ -129,8 +128,7 @@ class FixMessageReceiver(FixTagReceiver):
             self._message.append_tag(int(key), val)
             if self._message.checksum != val:
                 raise Exception(
-                    "Incorrect CheckSum: Recieved '%s', Should be '%s'" %
-                    (val, self._message.checksum)
+                    "Incorrect CheckSum: Recieved '{0!s}', Should be '{1!s}'".format(val, self._message.checksum)
                     )
             else:
                 message = self._message
