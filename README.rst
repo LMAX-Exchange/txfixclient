@@ -15,6 +15,10 @@ Quickfix XML spec files ara available at http://www.quickfixengine.org/
 .. image:: https://travis-ci.org/LMAX-Exchange/txfixclient.svg?branch=master
     :target: https://travis-ci.org/LMAX-Exchange/txfixclient
 
+.. image:: https://www.quantifiedcode.com/api/v1/project/b2954a0977f44934a413a2be030f114a/badge.svg
+  :target: https://www.quantifiedcode.com/app/project/b2954a0977f44934a413a2be030f114a
+  :alt: Code issues
+
 Installation
 ------------
 
