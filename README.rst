@@ -10,6 +10,9 @@ To use this as it is you will need to be a customer of LMAX Exchange. If you
 wish to use this against another FIX engine then you can modify the messages to
 suit that platform.
 
+.. image:: https://travis-ci.org/LMAX-Exchange/txfixclient.svg?branch=master
+    :target: https://travis-ci.org/LMAX-Exchange/txfixclient
+
 Installation
 ------------
 
