@@ -1,0 +1,8 @@
+# Testing requirements
+
+-r base.txt
+
+#coverage
+#pyflakes
+#pylint
+#pep8

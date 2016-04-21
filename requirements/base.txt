@@ -1,0 +1,7 @@
+# This should contain the requirements for the project with out any testing or
+# development dependencies
+
+twisted
+service_identity
+pip
+hdrhistogram

@@ -1,0 +1,16 @@
+
+
+image: timhughes/centos:centos7_python2.7.11
+
+before_script:
+  - yum -y install libffi-devel
+  - pip install -r requirements/test.txt
+
+stages:
+  - test
+
+unit_tests:
+  stage: test
+  script:
+    - cd src
+    - trial txfixclient

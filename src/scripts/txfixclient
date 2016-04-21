@@ -1,0 +1,50 @@
+#!/usr/bin/env python
+from twisted.scripts.twistd import run, runApp, ServerOptions
+from twisted.application import app
+import sys
+
+
+from twisted.application.service import ServiceMaker
+serviceMaker = ServiceMaker(
+    'txfixclient',
+    'txfixclient.tap',
+    'Run the Fix Client service',
+    'txfixclient'
+    )
+
+plug = serviceMaker
+
+class MyServerOptions(ServerOptions):
+    """
+    See twisted.application.app.ServerOptions.subCommands().
+    Override to specify a single plugin subcommand and load the plugin
+    explictly.
+    """
+    def subCommands(self):
+        self.loadedPlugins = {plug.tapname:plug}
+        yield (plug.tapname,
+               None,
+               # Avoid resolving the options attribute right away, in case
+               # it's a property with a non-trivial getter (eg, one which
+               # imports modules).
+               lambda plug=plug: plug.options(),
+               plug.description)
+
+    subCommands = property(subCommands)
+
+
+def run():
+    """
+    Replace twisted.application.app.run()
+    To use our ServerOptions.
+    """
+    app.run(runApp, MyServerOptions)
+
+
+
+sys.argv[1:]= [plug.tapname] + sys.argv[1:]
+
+run()
+
+
+
