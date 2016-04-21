@@ -48,8 +48,7 @@ class FixMessage(object):
             chksum = self.calc_checksum()
             if chksum != val:
                 raise Exception(
-                    "Incorrect CheckSum: Actually '%s', Should be '%s'" %
-                    (val, chksum)
+                    "Incorrect CheckSum: Actually '{0!s}', Should be '{1!s}'".format(val, chksum)
                     )
             else:
                 self._data.append((int(id), val))
@@ -111,4 +110,4 @@ class FixMessage(object):
         return self.checksum
 
     def _tag_to_string(self, k, v):
-        return "%s=%s%s" % (k, v, self._delimiter)
+        return "{0!s}={1!s}{2!s}".format(k, v, self._delimiter)
