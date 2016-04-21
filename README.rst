@@ -10,6 +10,8 @@ To use this as it is you will need to be a customer of LMAX Exchange. If you
 wish to use this against another FIX engine then you can modify the messages to
 suit that platform.
 
+Quickfix XML spec files ara available at http://www.quickfixengine.org/
+
 .. image:: https://travis-ci.org/LMAX-Exchange/txfixclient.svg?branch=master
     :target: https://travis-ci.org/LMAX-Exchange/txfixclient
 
@@ -29,7 +31,7 @@ Usage
         txfixclient \
         --hostname fix-marketdata.london-demo.lmax.com \
         --port 443 \
-        --spec LMAX-FIX-MarketData-API-QuickFix-DataDictionary.xml \
+        --spec ./specs/FIX44.xml \
         --target_comp_id <targetcompid> \
         --sender_comp_id <sendercompid> \
         --password <password> \
