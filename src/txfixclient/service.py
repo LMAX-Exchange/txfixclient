@@ -233,7 +233,8 @@ class FixClientService(service.Service):
     def handle_Logon(self, msg):
         log.debug("Logon: success")
         self.call_Heartbeat()
-        self.call_TestRequest()
+        self.testreq_loop = task.LoopingCall(self.call_TestRequest)
+        self.testreq_loop.start(1)
         self.mdSubscribe(self.config['instrument_id'],
                          self.config['market_depth'],
                          self.config['instrument_id'])
@@ -279,7 +280,6 @@ class FixClientService(service.Service):
         msg = messages.TestRequest(self)
         self.test_requests[msg.get_tag(112)[0][1]] = parse_time(msg.get_tag(52)[0][1])
         self.sendMessage(msg)
-        reactor.callLater(1, self.call_TestRequest)
 
     def handle_TestRequest(self, msg):
 
