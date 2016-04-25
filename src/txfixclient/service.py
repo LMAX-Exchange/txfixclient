@@ -45,6 +45,7 @@ class FixClientService(service.Service):
         self.spec = Spec(config['spec'])
         self._seqnum = itertools.count(1)
         self._test_request_id = itertools.count(1)
+        self.testreq_loop = None
         self.test_requests = dict()
         self.version = self.spec.root.attrib
         self.BeginString = '.'.join([
@@ -233,6 +234,8 @@ class FixClientService(service.Service):
     def handle_Logon(self, msg):
         log.debug("Logon: success")
         self.call_Heartbeat()
+        if self.testreq_loop is not None and self.testreq_loop.running:
+            self.testreq_loop.stop()
         self.testreq_loop = task.LoopingCall(self.call_TestRequest)
         self.testreq_loop.start(1)
         self.mdSubscribe(self.config['instrument_id'],
