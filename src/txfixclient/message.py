@@ -45,6 +45,7 @@ class FixMessage(object):
 
         if id is 10:
             # TODO check body length
+            self._update_length()
             chksum = self.calc_checksum()
             if chksum != val:
                 raise Exception(
@@ -59,7 +60,6 @@ class FixMessage(object):
         if id not in [8, 9, 10]:
             self._data.append((int(id), val))
 
-        self._update_length()
 
     def append_tags(self, tags):
         for tag in tags:
@@ -91,6 +91,7 @@ class FixMessage(object):
                 meta[k] = v
                 continue
             msg_str = msg_str + self._tag_to_string(k, v)
+        self._update_length()
         meta[9] = self.length  # set BodyLength
         msg_str = self._tag_to_string(8, meta[8]) + \
             self._tag_to_string(9, meta[9]) + msg_str
